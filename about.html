@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About - Adventure More</title>
     <style>
+        /* Global Styles */
         * {
             margin: 0;
             padding: 0;
@@ -12,16 +13,18 @@
         }
 
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'BigNoodleToo', Arial, sans-serif;
             line-height: 1.6;
         }
 
+        /* Navbar */
         .navbar {
             display: flex;
             justify-content: space-between;
             align-items: center;
             background-color: #ffe500;
             padding: 10px 20px;
+            position: relative;
         }
 
         .navbar .logo img {
@@ -31,6 +34,7 @@
         .navbar .nav-links {
             display: flex;
             gap: 20px;
+            position: relative;
         }
 
         .navbar .nav-links a {
@@ -44,22 +48,124 @@
             color: #f39c12;
         }
 
+        /* Dropdown Menu */
+        .dropdown {
+            position: relative;
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: opacity 0.3s ease, transform 0.3s ease;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .dropdown-content a {
+            display: block;
+            padding: 10px;
+            color: black;
+            text-decoration: none;
+            background-color: white;
+            transition: color 0.3s;
+        }
+
+        .dropdown-content a:hover {
+            color: #f39c12; /* Change text color on hover */
+        }
+
+        /* Hero Section */
         .hero {
+            position: relative;
+            width: 100%;
+            height: 80vh;
+            overflow: hidden;
+        }
+
+        .hero img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0;
+            transition: opacity 1.5s ease-in-out;
+        }
+
+        .hero img.active {
+            opacity: 1;
+        }
+
+        .hero .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             display: flex;
             justify-content: center;
             align-items: center;
-            height: 60vh;
-            background: url('/static/hero/about-hero.jpg') center/cover no-repeat;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .hero .overlay h1 {
             color: white;
-            text-align: center;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
+        }
+
+        /* Releases Section */
+        .releases-section {
             padding: 20px;
+            background-color: #222;
+            color: white;
         }
 
-        .hero h1 {
-            font-size: 3em;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        .releases-section h2 {
+            text-align: center;
+            margin-bottom: 20px;
         }
 
+        .releases-grid {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .releases-grid .tile {
+            background-color: #333;
+            text-align: center;
+            cursor: pointer;
+            border: 1px solid #555;
+            transition: transform 0.3s, box-shadow 0.3s;
+            width: 200px;
+            height: 300px;
+        }
+
+        .releases-grid .tile img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .releases-grid .tile:hover {
+            transform: scale(1.05);
+            box-shadow: 0 5px 15px rgba(255, 255, 255, 0.2);
+        }
         .content {
             max-width: 800px;
             margin: 20px auto;
@@ -101,24 +207,42 @@
             background-color: #f4f4f4;
             color: #555;
         }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            padding: 10px;
+            background-color: #ffe500;
+            color: black;
+        }
     </style>
 </head>
 <body>
     <!-- Navbar -->
     <div class="navbar">
         <div class="logo">
-            <img src="/static/logos/magazinehead.jpg" alt="Adventure More Header">
+            <img src="/static/logos/magazinehead.webp" alt="Adventure More Header">
         </div>
         <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="#releases">Releases</a>
-            <a href="about.html">About</a>
+            <a href="#" aria-label="Home">Home</a>
+            <div class="dropdown">
+                <a href="#releases" aria-label="Releases">Releases</a>
+                <div class="dropdown-content">
+                    <a href="releases.html?release=1" aria-label="Release 1">Release 1</a>
+                </div>
+            </div>
+            <a href="about.html" aria-label="About">About</a>
         </div>
     </div>
 
     <!-- Hero Section -->
     <div class="hero">
-        <h1>About Adventure More</h1>
+        <div class="overlay">
+            <h1>About Adventure More</h1>
+        </div>
+        <img src="/static/hero/rs457.webp" alt="rs457" class="active">
+        <img src="/static/hero/grr450.webp" alt="grr450">
+        <img src="/static/hero/z650rs.webp" alt="z650rs">
     </div>
 
     <!-- Content Section -->
@@ -142,5 +266,16 @@
     <footer>
         &copy; 2025 Adventure More. All rights reserved.
     </footer>
+    <script>
+        // Smooth Slideshow
+        const slides = document.querySelectorAll('.hero img');
+        let currentSlide = 0;
+
+        setInterval(() => {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (currentSlide + 1) % slides.length;
+            slides[currentSlide].classList.add('active');
+        }, 5000);
+    </script>
 </body>
 </html>
