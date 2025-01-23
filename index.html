@@ -11,10 +11,12 @@
             padding: 0;
             box-sizing: border-box;
         }
-
-        body {
-            font-family: 'BigNoodleToo', Arial, sans-serif;
-            line-height: 1.6;
+        @font-face {
+            font-family: BigNoodleToo;
+            src: url(BigNoodleToo.ttf);
+        }
+        *{
+            font-family: BigNoodleToo;
         }
 
         /* Navbar */
@@ -157,7 +159,6 @@
         }
 
         .releases-grid .tile img {
-            width: 100%;
             height: 100%;
             object-fit: cover;
         }
@@ -183,7 +184,7 @@
             <img src="/static/logos/magazinehead.webp" alt="Adventure More Header">
         </div>
         <div class="nav-links">
-            <a href="#" aria-label="Home">Home</a>
+            <a href="index.html" aria-label="Home">Home</a>
             <div class="dropdown">
                 <a href="#releases" aria-label="Releases">Releases</a>
                 <div class="dropdown-content">
